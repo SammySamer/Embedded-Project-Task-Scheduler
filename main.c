@@ -27,7 +27,7 @@ struct Task {
 struct Queue {
 	int currSize; 
 	int maxSize;
-	struct Task* task[50];
+	struct Task task[50];
 };
 
 static char timerFlag = 0;
@@ -53,21 +53,19 @@ void Dispatch(void);
 void ReRunMe(int delay);
 
 //queue functions
-void insertRQueue(struct Task*);
+void insertRQueue(struct Task);
 
-static struct Queue* readyQueue;
-static struct Queue* delayQueue;
+static struct Queue readyQueue;
+static struct Queue delayQueue;
 
 void Init(){
 	
 	//init the 2 queues
-	readyQueue = (struct Queue*)malloc(sizeof(struct Queue*));
-	readyQueue->currSize = 0;
-	readyQueue->maxSize = MAX_SIZE;
+	readyQueue.currSize = 0;
+	readyQueue.maxSize = MAX_SIZE;
 	
-	delayQueue = (struct Queue*)malloc(sizeof(struct Queue*));
-	delayQueue->currSize = 0;
-	delayQueue->maxSize = MAX_SIZE;
+	delayQueue.currSize = 0;
+	delayQueue.maxSize = MAX_SIZE;
 	
 	
 }
@@ -191,45 +189,44 @@ void QueTask(void (*task)(void)) {
 	srand(time(0));
 	int priority = rand() % 7;
 	
-	struct Task* newTask = (struct Task*)malloc(sizeof(struct Task*));
+	struct Task newTask;
 	
-	newTask->delay = 0;
-	newTask->prior = priority;
-	newTask->fncName = task;
+	newTask.delay = 0;
+	newTask.prior = priority;
+	newTask.fncName = task;
 	
 	insertRQueue(newTask);
 	
-	free(newTask);
 	
 }
 
 
-void insertRQueue(struct Task* T) {
+void insertRQueue(struct Task T) {
 	
 	//if the queue is full, do nothing
-	if (readyQueue->currSize == readyQueue->maxSize)
+	if (readyQueue.currSize == readyQueue.maxSize)
 		return;
 	
-  for (int i = 0; i <= readyQueue->currSize; i++) {
+  for (int i = 0; i <= readyQueue.currSize; i++) {
 
 		//if the current tasks's priority is more than what we're currently
 		//pointing to, we want to place it in that position
-		if (T->prior >= readyQueue->task[i]->prior) {
+		if (T.prior >= readyQueue.task[i].prior) {
 			
 			//start shifting everything to the right to make space
-			for (int j = readyQueue->currSize + 1; j > i; j--)
-					readyQueue->task[j] = readyQueue->task[j - 1];
+			for (int j = readyQueue.currSize + 1; j > i; j--)
+					readyQueue.task[j] = readyQueue.task[j - 1];
 
-			readyQueue->task[i] = T;
-			readyQueue->currSize = readyQueue->currSize + 1;
+			readyQueue.task[i] = T;
+			readyQueue.currSize = readyQueue.currSize + 1;
 		
 			return;
 		}
 	}
 
 	//if the priority is smaller than everything else, place it at the end.
-	readyQueue->currSize = readyQueue->currSize + 1;
-	readyQueue->task[readyQueue->currSize] = T;
+	readyQueue.currSize = readyQueue.currSize + 1;
+	readyQueue.task[readyQueue.currSize] = T;
 
 }
 
@@ -237,18 +234,18 @@ void insertRQueue(struct Task* T) {
 void Dispatch() {
 	
 	//if the queue is not empty
-	if (readyQueue->currSize != 0) {
-		void (*runTask)(void) = readyQueue->task[0]->fncName;
+	if (readyQueue.currSize != 0) {
+		void (*runTask)(void) = readyQueue.task[0].fncName;
 		(*runTask)();
 		
 		static uint8_t msgX[] = "\n";
 		sendUART( (uint8_t*) msgX, sizeof(msgX) );
 		
-		//start shifting everything to the left
-		for (int j = 0; j < readyQueue->currSize; j++)
-				readyQueue->task[j] = readyQueue->task[j + 1];
+		//start shifti.ng everything to the left
+		for (int j = 0; j < readyQueue.currSize; j++)
+				readyQueue.task[j] = readyQueue.task[j + 1];
 	
-		readyQueue->currSize = readyQueue->currSize - 1;
+		readyQueue.currSize = readyQueue.currSize - 1;
 	}
 }
 
