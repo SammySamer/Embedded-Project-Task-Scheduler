@@ -180,10 +180,10 @@ void FirstTask() {
 
 void TaskA() {
 	
-	sendUART(msgA, sizeof(msgA));
+	//sendUART(msgA, sizeof(msgA));
 	
 	sendUART(msgA_done, sizeof(msgA_done));
-	ReRunMe(15);
+	ReRunMe(10);
 }
 
 void TaskB() {
@@ -321,9 +321,9 @@ int main()
 	uartInit();
 	
 	/* enable SysTick timer to interrupt system every 100ms */
-	SysTick->LOAD = 16000000 - 1;
+	SysTick->LOAD = 6000000 - 1;
 	SysTick->CTRL = 7;
-	SysTick_Config(SystemCoreClock/4);
+	//SysTick_Config(SystemCoreClock/4);
 	__enable_irq();
 	
 	
