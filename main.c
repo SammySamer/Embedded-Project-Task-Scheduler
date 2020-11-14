@@ -6,8 +6,9 @@
 #include <stdarg.h>
 #include <time.h>
 
+#define MAX_SIZE 49
 
-static uint8_t msg[] = "Renode Alive !!\n";
+
 static uint8_t pressedMsg[] = "Button is pressed !!\n";
 static uint8_t releasedMsg[] = "Button is released !!\n";
 
@@ -15,26 +16,25 @@ static uint8_t msgA[] = "Task A has been initialized.\n";
 static uint8_t msgB[] = "Task B has been initialized.\n";
 static uint8_t msgC[] = "Task C has been initialized.\n";
 
-static uint8_t msg_done[] = "This task has finished running: ";
-
 static uint8_t msgA_done[] = "Task A has finished running\n";
 static uint8_t msgB_done[] = "Task B has finished running\n";
 static uint8_t msgC_done[] = "Task C has finished running\n";
 
 
 struct Task {
-	char TaskName;
 	int prior;
 	int delay;
+	void (*fncName)(void);
 };
 
 struct Queue {
 	int currSize; 
 	int maxSize;
+	struct Task* task[50];
 };
 
-struct Queue* readyQueue;
-struct Queue* delayQueue;
+static 
+
 
 static char buttonPressed = 1;
 static char timerFlag = 0;
@@ -54,14 +54,29 @@ void TaskC(void);
 
 //TaskScheduler functions
 void Init(void);
-void QueTask(void *task);
+void QueTask(void (*task)(void));
 void Dispatch(void);
 void ReRunMe(int delay);
 
 //queue functions
-void insert(struct Queue*);
+void insert(struct Queue*, struct Task*);
 
+static struct Queue* readyQueue;
+static struct Queue* delayQueue;
 
+void Init(){
+	
+	//init the 2 queues
+	readyQueue = (struct Queue*)malloc(sizeof(struct Queue*));
+	readyQueue->currSize = 0;
+	readyQueue->maxSize = MAX_SIZE;
+	
+	delayQueue = (struct Queue*)malloc(sizeof(struct Queue*));
+	delayQueue->currSize = 0;
+	delayQueue->maxSize = MAX_SIZE;
+	
+	
+}
 
 void SysTick_Handler(void)  {
 	timerFlag = 1;
@@ -159,103 +174,117 @@ static void uartInit()
     USART2->CR1 |= (1 << 13);
 }
 
-void swap(int *a, int *b) {
-	int temp = *b;
-	*b = *a;
-	*a = temp;
-}
 
 void TaskA() {
-	srand(time(0));
-	int priority = rand() % 7;
 	
 	sendUART(msgA, sizeof(msgA));
 	sendUART(msgA_done, sizeof(msgA_done));
-	ReRunMe(0);
+	//ReRunMe(0);
 }
 
 void TaskB() {
-	srand(time(0));
-	int priority = rand() % 7;
 	
 	sendUART(msgB, sizeof(msgB));
 	sendUART(msgB_done, sizeof(msgB_done));
 }
 
 void TaskC() {
-	srand(time(0));
-	int priority = rand() % 7;
 	
 	sendUART(msgC, sizeof(msgC));
 	sendUART(msgC_done, sizeof(msgC_done));
 }
 
-void Init(){
-	//init the 2 queues
-	struct Queue* readyQueue = (struct Queue*)malloc(sizeof(struct Queue*));
-	struct Queue* delayQueue = (struct Queue*)malloc(sizeof(struct Queue*));
-}
 
-void insert(struct Queue* Q) {
+void insert(struct Queue* Q, struct Task* T) {
 	
-	//if the queue is full
+	//if the queue is full, do nothing
 	if (Q->currSize == Q->maxSize)
 		return;
 	
   for (int i = 0; i <= Q->currSize; i++) {
 
-        if (data >= pri_que[i])
+		//if the current tasks's priority is more than what we're currently
+		//pointing to, we want to place it in that position
+		if (T->prior >= Q->task[i]->prior) {
+			
+			//start shifting everything to the right to make space
+				for (int j = Q->currSize + 1; j > i; j--)
+						Q->task[j] = Q->task[j - 1];
 
-        {
+				Q->task[i] = T;
+				Q->currSize = Q->currSize + 1;
+			
+				return;
+		}
+	}
 
-            for (int j = rear + 1; j > i; j--)
-
-            {
-
-                pri_que[j] = pri_que[j - 1];
-
-            }
-
-            pri_que[i] = data;
-
-            return;
-
-        }
-
-    }
-
-    pri_que[i] = data;
+	//if the priority is smaller than everything else, place it at the end.
+	Q->currSize = Q->currSize + 1;
+	Q->task[Q->currSize] = T;
 
 }
+
+void QueTask(void (*task)(void)) {
+	
+	srand(time(0));
+	int priority = rand() % 7;
+	
+	struct Task* newTask = (struct Task*)malloc(sizeof(struct Task*));
+	
+	newTask->delay = 0;
+	newTask->prior = priority;
+	newTask->fncName = task;
+	
+	insert(readyQueue, newTask);
+	
+}
+
+void Dispatch() {
+	
+	//if it's not empty
+	if (readyQueue->currSize != 0) {
+		void (*runTask)(void) = readyQueue->task[0]->fncName;
+		(*runTask)();
+		readyQueue->currSize = readyQueue->currSize - 1;
+	}
 }
 
 int main()
 {	
-	  /* startup code initialization */
-	  SystemInit();
-	  SystemCoreClockUpdate();
-	  /* intialize UART */
-	  gpioInit();
-		/* intialize UART */
-	  uartInit();
-	  /* enable SysTick timer to interrupt system every second */
-	  SysTick_Config(SystemCoreClock);
-	  /* enable interrupt controller for USART2 external interrupt */
-		NVIC_EnableIRQ(USART2_IRQn);
-		/* Unmask External interrupt 0 */
-		EXTI->IMR |= 0x0001;
-	  /* Enable rising and falling edge triggering for External interrupt 0 */
-		EXTI->RTSR |= 0x0001;
-		EXTI->FTSR |= 0x0001;
-	  /* enable interrupt controller for External interrupt 0 */
-		NVIC_EnableIRQ(EXTI0_IRQn);
+	Init();
 	
-	  while(1)
-		{
-				if(timerFlag && !stopFlag)
-				{
-						sendUART(msg, sizeof(msg));
-					  timerFlag = 0;
-				}
-		}
+	
+	/* startup code initialization */
+	SystemInit();
+	SystemCoreClockUpdate();
+	/* intialize UART */
+	gpioInit();
+	/* intialize UART */
+	uartInit();
+	/* enable SysTick timer to interrupt system every second */
+	SysTick_Config(SystemCoreClock);
+	/* enable interrupt controller for USART2 external interrupt */
+	NVIC_EnableIRQ(USART2_IRQn);
+	/* Unmask External interrupt 0 */
+	EXTI->IMR |= 0x0001;
+	/* Enable rising and falling edge triggering for External interrupt 0 */
+	EXTI->RTSR |= 0x0001;
+	EXTI->FTSR |= 0x0001;
+	/* enable interrupt controller for External interrupt 0 */
+	NVIC_EnableIRQ(EXTI0_IRQn);
+
+
+	QueTask(TaskA);
+	QueTask(TaskB);
+	QueTask(TaskC);
+	QueTask(TaskB);
+	
+	while(1)
+	{
+			if(timerFlag && !stopFlag)
+			{
+				Dispatch();
+				timerFlag = 0;
+			}
+	}
 }
