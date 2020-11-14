@@ -183,7 +183,7 @@ void TaskA() {
 	sendUART(msgA, sizeof(msgA));
 	
 	sendUART(msgA_done, sizeof(msgA_done));
-	ReRunMe(5);
+	ReRunMe(15);
 }
 
 void TaskB() {
@@ -191,7 +191,7 @@ void TaskB() {
 	sendUART(msgB, sizeof(msgB));
 
 	sendUART(msgB_done, sizeof(msgB_done));
-	ReRunMe(0);
+	//ReRunMe(20);
 }
 
 void TaskC() {
@@ -199,6 +199,7 @@ void TaskC() {
 	sendUART(msgC, sizeof(msgC));
 	
 	sendUART(msgC_done, sizeof(msgC_done));
+	//ReRunMe(25);
 }
 
 
@@ -214,8 +215,6 @@ void QueTask(void (*task)(void)) {
 	newTask.fncName = task;
 	
 	insertRQueue(newTask);
-	
-	
 }
 
 
@@ -322,7 +321,11 @@ int main()
 	uartInit();
 	
 	/* enable SysTick timer to interrupt system every 100ms */
-	SysTick_Config(SystemCoreClock/10);
+	SysTick->LOAD = 16000000 - 1;
+	SysTick->CTRL = 7;
+	SysTick_Config(SystemCoreClock/4);
+	__enable_irq();
+	
 	
 	/* enable interrupt controller for USART2 external interrupt */
 	NVIC_EnableIRQ(USART2_IRQn);
@@ -345,10 +348,6 @@ int main()
 	//queueing the tasks
 	QueTask(TaskA);
 	QueTask(TaskB);
-	QueTask(TaskC);
-	QueTask(TaskC);
-	QueTask(TaskC);
-	QueTask(TaskC);
 	QueTask(TaskC);
 	
 	while(1)

@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\Task_Scheduler.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\Task_Scheduler.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6140002: Last Updated: Sat Nov 14 23:21:16 2020
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6140002: Last Updated: Sun Nov 15 00:01:18 2020
 <BR><P>
 <H3>Maximum Stack Usage =         68 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -678,8 +678,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;insertRQueue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskB
-<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskA
+<BR>[Called By]<UL><LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskA
 </UL>
 
 <P><STRONG><a name="[9]"></a>SysTick_Handler</STRONG> (Thumb, 90 bytes, Stack size 16 bytes, main.o(.text.SysTick_Handler))
@@ -693,7 +692,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[5b]"></a>SystemInit</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, system_stm32f4xx.o(.text.SystemInit))
+<P><STRONG><a name="[5b]"></a>SystemInit</STRONG> (Thumb, 28 bytes, Stack size 0 bytes, system_stm32f4xx.o(.text.SystemInit))
 <BR><BR>[Called By]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(.text)
@@ -706,11 +705,10 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text.main)
 </UL>
-<P><STRONG><a name="[5f]"></a>TaskB</STRONG> (Thumb, 38 bytes, Stack size 8 bytes, main.o(.text.TaskB))
-<BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = TaskB &rArr; ReRunMe &rArr; insertRQueue
+<P><STRONG><a name="[5f]"></a>TaskB</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, main.o(.text.TaskB))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = TaskB
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReRunMe
-<LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendUART
+<BR>[Calls]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendUART
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text.main)
 </UL>
@@ -736,7 +734,7 @@ Global Symbols
 <LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QueTask
 </UL>
 
-<P><STRONG><a name="[6f]"></a>main</STRONG> (Thumb, 178 bytes, Stack size 0 bytes, main.o(.text.main))
+<P><STRONG><a name="[6f]"></a>main</STRONG> (Thumb, 162 bytes, Stack size 0 bytes, main.o(.text.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 36<LI>Call Chain = main &rArr; QueTask &rArr; insertRQueue
 </UL>
 <BR>[Calls]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemInit
