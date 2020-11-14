@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\Task_Scheduler.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\Task_Scheduler.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6140002: Last Updated: Sat Nov 14 20:58:38 2020
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6140002: Last Updated: Sat Nov 14 21:19:00 2020
 <BR><P>
 <H3>Maximum Stack Usage =         72 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -116,7 +116,7 @@ Function Pointers
  <LI><a href="#[38]">TIM8_CC_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
  <LI><a href="#[37]">TIM8_TRG_COM_TIM14_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
  <LI><a href="#[36]">TIM8_UP_TIM13_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
- <LI><a href="#[5d]">TaskA</a> from main.o(.text.TaskA) referenced 2 times from main.o(.text.main)
+ <LI><a href="#[5d]">TaskC</a> from main.o(.text.TaskC) referenced 2 times from main.o(.text.main)
  <LI><a href="#[3e]">UART4_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
  <LI><a href="#[3f]">UART5_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
  <LI><a href="#[2f]">USART1_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
@@ -807,8 +807,8 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(.text)
 </UL>
-<P><STRONG><a name="[5d]"></a>TaskA</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, main.o(.text.TaskA))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = TaskA
+<P><STRONG><a name="[5d]"></a>TaskC</STRONG> (Thumb, 28 bytes, Stack size 8 bytes, main.o(.text.TaskC))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = TaskC
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendUART
 </UL>
@@ -879,7 +879,7 @@ Local Symbols
 </UL>
 
 <P><STRONG><a name="[8a]"></a>sendUART</STRONG> (Thumb, 38 bytes, Stack size 0 bytes, main.o(.text.sendUART))
-<BR><BR>[Called By]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskA
+<BR><BR>[Called By]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskC
 </UL>
 
 <P><STRONG><a name="[8e]"></a>uartInit</STRONG> (Thumb, 82 bytes, Stack size 0 bytes, main.o(.text.uartInit))

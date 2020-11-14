@@ -46,7 +46,7 @@ Section Cross References
     main.o(.text.main) refers to main.o(.text.SysTick_Config) for SysTick_Config
     main.o(.text.main) refers to main.o(.text.__NVIC_EnableIRQ) for __NVIC_EnableIRQ
     main.o(.text.main) refers to main.o(.text.Init) for Init
-    main.o(.text.main) refers to main.o(.text.TaskA) for TaskA
+    main.o(.text.main) refers to main.o(.text.TaskC) for TaskC
     main.o(.text.main) refers to main.o(.text.QueTask) for QueTask
     main.o(.text.main) refers to main.o(.text.Dispatch) for Dispatch
     main.o(.ARM.exidx.text.main) refers to main.o(.text.main) for [Anonymous Symbol]
@@ -290,11 +290,11 @@ Removing Unused input sections from the image.
     Removing main.o(.ARM.exidx.text.USART2_IRQHandler), (8 bytes).
     Removing main.o(.ARM.exidx.text.receiveUART), (8 bytes).
     Removing main.o(.ARM.exidx.text.EXTI0_IRQHandler), (8 bytes).
+    Removing main.o(.text.TaskA), (28 bytes).
     Removing main.o(.ARM.exidx.text.TaskA), (8 bytes).
     Removing main.o(.ARM.exidx.text.sendUART), (8 bytes).
     Removing main.o(.text.TaskB), (28 bytes).
     Removing main.o(.ARM.exidx.text.TaskB), (8 bytes).
-    Removing main.o(.text.TaskC), (28 bytes).
     Removing main.o(.ARM.exidx.text.TaskC), (8 bytes).
     Removing main.o(.ARM.exidx.text.insertRQueue), (8 bytes).
     Removing main.o(.ARM.exidx.text.QueTask), (8 bytes).
@@ -305,10 +305,10 @@ Removing Unused input sections from the image.
     Removing main.o(.ARM.exidx.text.gpioInit), (8 bytes).
     Removing main.o(.ARM.exidx.text.uartInit), (8 bytes).
     Removing main.o(.ARM.exidx.text.__NVIC_SetPriority), (8 bytes).
+    Removing main.o(.data.msgA), (29 bytes).
+    Removing main.o(.data.msgA_done), (29 bytes).
     Removing main.o(.data.msgB), (29 bytes).
     Removing main.o(.data.msgB_done), (29 bytes).
-    Removing main.o(.data.msgC), (29 bytes).
-    Removing main.o(.data.msgC_done), (29 bytes).
     Removing main.o(.ARM.use_no_argv), (4 bytes).
     Removing system_stm32f4xx.o(.text), (0 bytes).
     Removing system_stm32f4xx.o(.ARM.exidx.text.SystemInit), (8 bytes).
@@ -493,7 +493,7 @@ Image Symbol Table
     [Anonymous Symbol]                       0x08000690   Section        0  main.o(.text.SysTick_Handler)
     [Anonymous Symbol]                       0x08000694   Section        0  system_stm32f4xx.o(.text.SystemCoreClockUpdate)
     [Anonymous Symbol]                       0x08000714   Section        0  system_stm32f4xx.o(.text.SystemInit)
-    [Anonymous Symbol]                       0x08000730   Section        0  main.o(.text.TaskA)
+    [Anonymous Symbol]                       0x08000730   Section        0  main.o(.text.TaskC)
     [Anonymous Symbol]                       0x0800074c   Section        0  main.o(.text.USART2_IRQHandler)
     __NVIC_EnableIRQ                         0x08000769   Thumb Code    32  main.o(.text.__NVIC_EnableIRQ)
     [Anonymous Symbol]                       0x08000768   Section        0  main.o(.text.__NVIC_EnableIRQ)
@@ -511,10 +511,10 @@ Image Symbol Table
     [Anonymous Symbol]                       0x080008d8   Section        0  main.o(.text.uartInit)
     $v0                                      0x0800092a   Number         0  fpinit.o(x$fpl$fpinit)
     x$fpl$fpinit                             0x0800092a   Section       26  fpinit.o(x$fpl$fpinit)
-    msgA                                     0x20000004   Data          29  main.o(.data.msgA)
-    [Anonymous Symbol]                       0x20000004   Section        0  main.o(.data.msgA)
-    msgA_done                                0x20000021   Data          29  main.o(.data.msgA_done)
-    [Anonymous Symbol]                       0x20000021   Section        0  main.o(.data.msgA_done)
+    msgC                                     0x20000004   Data          29  main.o(.data.msgC)
+    [Anonymous Symbol]                       0x20000004   Section        0  main.o(.data.msgC)
+    msgC_done                                0x20000021   Data          29  main.o(.data.msgC_done)
+    [Anonymous Symbol]                       0x20000021   Section        0  main.o(.data.msgC_done)
     .bss                                     0x20000040   Section      228  rand.o(.bss)
     .bss                                     0x20000124   Section       96  libspace.o(.bss)
     delayQueue                               0x20000184   Data           4  main.o(.bss.delayQueue)
@@ -745,7 +745,7 @@ Image Symbol Table
     SysTick_Handler                          0x08000691   Thumb Code     2  main.o(.text.SysTick_Handler)
     SystemCoreClockUpdate                    0x08000695   Thumb Code   126  system_stm32f4xx.o(.text.SystemCoreClockUpdate)
     SystemInit                               0x08000715   Thumb Code    26  system_stm32f4xx.o(.text.SystemInit)
-    TaskA                                    0x08000731   Thumb Code    28  main.o(.text.TaskA)
+    TaskC                                    0x08000731   Thumb Code    28  main.o(.text.TaskC)
     USART2_IRQHandler                        0x0800074d   Thumb Code    26  main.o(.text.USART2_IRQHandler)
     insertRQueue                             0x080007d9   Thumb Code   102  main.o(.text.insertRQueue)
     main                                     0x08000841   Thumb Code    98  main.o(.text.main)
@@ -862,7 +862,7 @@ Memory Map of the image
     0x08000712   0x08000712   0x00000002   PAD
     0x08000714   0x08000714   0x0000001a   Code   RO           65    .text.SystemInit    system_stm32f4xx.o
     0x0800072e   0x0800072e   0x00000002   PAD
-    0x08000730   0x08000730   0x0000001c   Code   RO           12    .text.TaskA         main.o
+    0x08000730   0x08000730   0x0000001c   Code   RO           18    .text.TaskC         main.o
     0x0800074c   0x0800074c   0x0000001a   Code   RO            6    .text.USART2_IRQHandler  main.o
     0x08000766   0x08000766   0x00000002   PAD
     0x08000768   0x08000768   0x00000020   Code   RO           30    .text.__NVIC_EnableIRQ  main.o
@@ -887,8 +887,8 @@ Memory Map of the image
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x20000000   0x08000974   0x00000004   Data   RW           69    .data.SystemCoreClock  system_stm32f4xx.o
-    0x20000004   0x08000978   0x0000001d   Data   RW           41    .data.msgA          main.o
-    0x20000021   0x08000995   0x0000001d   Data   RW           42    .data.msgA_done     main.o
+    0x20000004   0x08000978   0x0000001d   Data   RW           45    .data.msgC          main.o
+    0x20000021   0x08000995   0x0000001d   Data   RW           46    .data.msgC_done     main.o
 
 
     Execution Region ER_ZI (Exec base: 0x20000040, Load base: 0x080009b4, Size: 0x00000750, Max: 0xffffffff, ABSOLUTE)
@@ -912,12 +912,12 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-       738          0          0         58          9       8217   main.o
+       738          0          0         58          9       8215   main.o
         64         26        392          0       1536        900   startup_stm32f407xx.o
        152          0         16          4          0       2777   system_stm32f4xx.o
 
     ----------------------------------------------------------------------
-       974         26        440         64       1548      11894   Object Totals
+       974         26        440         64       1548      11892   Object Totals
          0          0         32          0          0          0   (incl. Generated)
         20          0          0          2          3          0   (incl. Padding)
 
@@ -983,8 +983,8 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      1980        122        440         64       1872      12898   Grand Totals
-      1980        122        440         64       1872      12898   ELF Image Totals
+      1980        122        440         64       1872      12896   Grand Totals
+      1980        122        440         64       1872      12896   ELF Image Totals
       1980        122        440         64          0          0   ROM Totals
 
 ==============================================================================

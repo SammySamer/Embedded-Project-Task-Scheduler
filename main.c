@@ -265,9 +265,9 @@ int main()
 	
 	Init();
 
-	QueTask(TaskA);
+	//QueTask(TaskA);
 	//QueTask(TaskB);
-	//QueTask(TaskC);
+	QueTask(TaskC);
 	//QueTask(TaskB);
 	
 	while(1)
