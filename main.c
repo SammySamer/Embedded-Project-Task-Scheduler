@@ -15,22 +15,22 @@ static uint8_t msgA[] = "Task A has been initialized.\n";
 static uint8_t msgB[] = "Task B has been initialized.\n";
 static uint8_t msgC[] = "Task C has been initialized.\n";
 
-static uint8_t msg_done[] = "This ask has finished running: ";
+static uint8_t msg_done[] = "This task has finished running: ";
 
 static uint8_t msgA_done[] = "Task A has finished running\n";
 static uint8_t msgB_done[] = "Task B has finished running\n";
 static uint8_t msgC_done[] = "Task C has finished running\n";
 
 
-struct Queue {
-	int currSize; 
-	int maxSize;
-};
-
 struct Task {
 	char TaskName;
 	int prior;
 	int delay;
+};
+
+struct Queue {
+	int currSize; 
+	int maxSize;
 };
 
 struct Queue* readyQueue;
