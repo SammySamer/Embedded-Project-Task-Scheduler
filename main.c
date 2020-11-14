@@ -249,9 +249,6 @@ void Dispatch() {
 
 int main()
 {	
-	Init();
-	
-	
 	/* startup code initialization */
 	SystemInit();
 	SystemCoreClockUpdate();
@@ -271,6 +268,8 @@ int main()
 	/* enable interrupt controller for External interrupt 0 */
 	NVIC_EnableIRQ(EXTI0_IRQn);
 
+	
+	Init();
 
 	QueTask(TaskA);
 	QueTask(TaskB);
