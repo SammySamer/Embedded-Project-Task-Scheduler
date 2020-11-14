@@ -17,6 +17,7 @@ static uint8_t msgA_done[] = "Task A has finished running.\n";
 static uint8_t msgB_done[] = "Task B has finished running.\n";
 static uint8_t msgC_done[] = "Task C has finished running.\n";
 
+static volatile uint32_t msTicks100 = 0;
 
 struct Task {
 	int prior;
@@ -30,7 +31,6 @@ struct Queue {
 	struct Task task[50];
 };
 
-static char timerFlag = 0;
 static volatile uint8_t stopFlag = 0;
 
 
@@ -55,8 +55,10 @@ void ReRunMe(int delay);
 //queue functions
 void insertRQueue(struct Task);
 
+//globals
 static struct Queue readyQueue;
 static struct Queue delayQueue;
+static struct Task currTask;
 
 void Init(){
 	
@@ -67,11 +69,27 @@ void Init(){
 	delayQueue.currSize = 0;
 	delayQueue.maxSize = MAX_SIZE;
 	
-	
 }
 
 void SysTick_Handler(void)  {
-	timerFlag = 1;
+	msTicks100++;
+	
+	//check the delayQueue to put anything in the readyQueue
+	//if the queue is not empty
+	if (delayQueue.currSize != 0) {
+		
+		//start checking the delayQueue
+		for (int j = delayQueue.currSize - 1; j >= 0; j--) {
+			delayQueue.task[j].delay--;
+			
+			//if the delay is now 0, it is now ready for the readyQueue and to
+			//be removed from the delayQueue
+			if (delayQueue.task[j].delay == 0) {
+				insertRQueue(delayQueue.task[j]);
+				delayQueue.currSize--;
+			}	
+		}
+	}
 }
 
 void USART2_IRQHandler(void) {
@@ -165,15 +183,15 @@ void TaskA() {
 	sendUART(msgA, sizeof(msgA));
 	
 	sendUART(msgA_done, sizeof(msgA_done));
-	//ReRunMe(0);
+	ReRunMe(5);
 }
 
 void TaskB() {
 	
 	sendUART(msgB, sizeof(msgB));
-	
-	
+
 	sendUART(msgB_done, sizeof(msgB_done));
+	ReRunMe(0);
 }
 
 void TaskC() {
@@ -230,12 +248,55 @@ void insertRQueue(struct Task T) {
 
 }
 
+void ReRunMe(int delay) {
+	
+	struct Task rerunTask;
+	
+	rerunTask.delay = delay;
+	rerunTask.prior = currTask.prior;
+	rerunTask.fncName = currTask.fncName;
+	
+	//instantly put into readyQueue
+	if (delay == 0)
+		insertRQueue(rerunTask);
+	
+	//needs to be put into the delayQueue
+	else {
+		
+		//if the queue is full, do nothing
+		if (delayQueue.currSize == delayQueue.maxSize)
+			return;
+		
+		for (int i = 0; i <= delayQueue.currSize; i++) {
+
+			//if the current tasks's priority is more than what we're currently
+			//pointing to, we want to place it in that position
+			if (rerunTask.delay >= delayQueue.task[i].prior) {
+				
+				//start shifting everything to the right to make space
+				for (int j = delayQueue.currSize + 1; j > i; j--)
+						delayQueue.task[j] = delayQueue.task[j - 1];
+
+				delayQueue.task[i] = rerunTask;
+				delayQueue.currSize = delayQueue.currSize + 1;
+			
+				return;
+			}
+		}
+
+		//if the delay is smaller than everything else, place it at the end.
+		delayQueue.currSize = readyQueue.currSize + 1;
+		delayQueue.task[readyQueue.currSize] = rerunTask;
+	}
+}
+
 
 void Dispatch() {
 	
 	//if the queue is not empty
 	if (readyQueue.currSize != 0) {
 		void (*runTask)(void) = readyQueue.task[0].fncName;
+		currTask = readyQueue.task[0];
 		(*runTask)();
 		
 		static uint8_t msgX[] = "\n";
@@ -246,6 +307,7 @@ void Dispatch() {
 				readyQueue.task[j] = readyQueue.task[j + 1];
 	
 		readyQueue.currSize = readyQueue.currSize - 1;
+		
 	}
 }
 
@@ -258,8 +320,10 @@ int main()
 	gpioInit();
 	/* intialize UART */
 	uartInit();
-	/* enable SysTick timer to interrupt system every second */
-	SysTick_Config(SystemCoreClock);
+	
+	/* enable SysTick timer to interrupt system every 100ms */
+	SysTick_Config(SystemCoreClock/10);
+	
 	/* enable interrupt controller for USART2 external interrupt */
 	NVIC_EnableIRQ(USART2_IRQn);
 	/* Unmask External interrupt 0 */
@@ -281,6 +345,10 @@ int main()
 	//queueing the tasks
 	QueTask(TaskA);
 	QueTask(TaskB);
+	QueTask(TaskC);
+	QueTask(TaskC);
+	QueTask(TaskC);
+	QueTask(TaskC);
 	QueTask(TaskC);
 	
 	while(1)
