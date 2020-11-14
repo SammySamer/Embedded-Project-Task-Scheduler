@@ -1,9 +1,41 @@
 #include "stm32f4xx.h"
 #include "system_stm32f4xx.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdarg.h>
+#include <time.h>
+
+
 static uint8_t msg[] = "Renode Alive !!\n";
 static uint8_t pressedMsg[] = "Button is pressed !!\n";
 static uint8_t releasedMsg[] = "Button is released !!\n";
+
+static uint8_t msgA[] = "Task A has been initialized.\n";
+static uint8_t msgB[] = "Task B has been initialized.\n";
+static uint8_t msgC[] = "Task C has been initialized.\n";
+
+static uint8_t msg_done[] = "This ask has finished running: ";
+
+static uint8_t msgA_done[] = "Task A has finished running\n";
+static uint8_t msgB_done[] = "Task B has finished running\n";
+static uint8_t msgC_done[] = "Task C has finished running\n";
+
+
+struct Queue {
+	int currSize; 
+	int maxSize;
+};
+
+struct Task {
+	char TaskName;
+	int prior;
+	int delay;
+};
+
+struct Queue* readyQueue;
+struct Queue* delayQueue;
+
 static char buttonPressed = 1;
 static char timerFlag = 0;
 static volatile uint8_t stopFlag = 0;
@@ -14,6 +46,22 @@ void USART2_IRQHandler(void);
 void EXTI0_IRQHandler(void);
 static void sendUART(uint8_t * data, uint32_t length);
 static uint8_t receiveUART(void);
+
+//Tasks
+void TaskA(void);
+void TaskB(void);
+void TaskC(void);
+
+//TaskScheduler functions
+void Init(void);
+void QueTask(void *task);
+void Dispatch(void);
+void ReRunMe(int delay);
+
+//queue functions
+void insert(struct Queue*);
+
+
 
 void SysTick_Handler(void)  {
 	timerFlag = 1;
@@ -109,6 +157,76 @@ static void uartInit()
 
     // enable usart2 - UE, bit 13
     USART2->CR1 |= (1 << 13);
+}
+
+void swap(int *a, int *b) {
+	int temp = *b;
+	*b = *a;
+	*a = temp;
+}
+
+void TaskA() {
+	srand(time(0));
+	int priority = rand() % 7;
+	
+	sendUART(msgA, sizeof(msgA));
+	sendUART(msgA_done, sizeof(msgA_done));
+	ReRunMe(0);
+}
+
+void TaskB() {
+	srand(time(0));
+	int priority = rand() % 7;
+	
+	sendUART(msgB, sizeof(msgB));
+	sendUART(msgB_done, sizeof(msgB_done));
+}
+
+void TaskC() {
+	srand(time(0));
+	int priority = rand() % 7;
+	
+	sendUART(msgC, sizeof(msgC));
+	sendUART(msgC_done, sizeof(msgC_done));
+}
+
+void Init(){
+	//init the 2 queues
+	struct Queue* readyQueue = (struct Queue*)malloc(sizeof(struct Queue*));
+	struct Queue* delayQueue = (struct Queue*)malloc(sizeof(struct Queue*));
+}
+
+void insert(struct Queue* Q) {
+	
+	//if the queue is full
+	if (Q->currSize == Q->maxSize)
+		return;
+	
+  for (int i = 0; i <= Q->currSize; i++) {
+
+        if (data >= pri_que[i])
+
+        {
+
+            for (int j = rear + 1; j > i; j--)
+
+            {
+
+                pri_que[j] = pri_que[j - 1];
+
+            }
+
+            pri_que[i] = data;
+
+            return;
+
+        }
+
+    }
+
+    pri_que[i] = data;
+
+}
 }
 
 int main()
