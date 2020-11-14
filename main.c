@@ -8,13 +8,14 @@
 
 #define MAX_SIZE 49
 
+static uint8_t msg1[] = "Scheduler is now running!\n\n";
 static uint8_t msgA[] = "Task A has started running.\n";
 static uint8_t msgB[] = "Task B has started running.\n";
 static uint8_t msgC[] = "Task C has started running.\n";
 
-static uint8_t msgA_done[] = "Task A has finished running\n";
-static uint8_t msgB_done[] = "Task B has finished running\n";
-static uint8_t msgC_done[] = "Task C has finished running\n";
+static uint8_t msgA_done[] = "Task A has finished running.\n";
+static uint8_t msgB_done[] = "Task B has finished running.\n";
+static uint8_t msgC_done[] = "Task C has finished running.\n";
 
 
 struct Task {
@@ -40,6 +41,7 @@ static void sendUART(uint8_t * data, uint32_t length);
 static uint8_t receiveUART(void);
 
 //Tasks
+void FirstTask(void);
 void TaskA(void);
 void TaskB(void);
 void TaskC(void);
@@ -156,6 +158,10 @@ static void uartInit()
 }
 
 
+void FirstTask() {
+	sendUART(msg1, sizeof(msg1));
+}
+
 void TaskA() {
 	
 	sendUART(msgA, sizeof(msgA));
@@ -265,15 +271,21 @@ int main()
 	
 	Init();
 
-	//QueTask(TaskA);
-	//QueTask(TaskB);
+	QueTask(FirstTask);
+	Dispatch();
+	
+	QueTask(TaskA);
+	QueTask(TaskB);
 	QueTask(TaskC);
-	//QueTask(TaskB);
+	
+	QueTask(TaskA);
+	QueTask(TaskB);
+	QueTask(TaskC);
 	
 	while(1)
 	{
-		// delay
-		for(uint32_t j=0; j<2500; ++j) {}
+		//delay
+		for(uint32_t j=0; j<32767; ++j) {}
 		Dispatch();
 	}
 }
