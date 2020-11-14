@@ -185,8 +185,10 @@ void TaskC() {
 	sendUART(msgC_done, sizeof(msgC_done));
 }
 
+
 void QueTask(void (*task)(void)) {
 	
+	srand(time(0));
 	int priority = rand() % 7;
 	
 	struct Task* newTask = (struct Task*)malloc(sizeof(struct Task*));
@@ -198,6 +200,7 @@ void QueTask(void (*task)(void)) {
 	insertRQueue(newTask);
 	
 	free(newTask);
+	
 }
 
 
@@ -229,6 +232,7 @@ void insertRQueue(struct Task* T) {
 	readyQueue->task[readyQueue->currSize] = T;
 
 }
+
 
 void Dispatch() {
 	
@@ -277,9 +281,9 @@ int main()
 	QueTask(TaskB);
 	QueTask(TaskC);
 	
-	//QueTask(TaskA);
-	//QueTask(TaskB);
-	//QueTask(TaskC);
+	QueTask(TaskA);
+	QueTask(TaskB);
+	QueTask(TaskC);
 	
 	while(1)
 	{
