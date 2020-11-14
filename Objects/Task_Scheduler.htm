@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\Task_Scheduler.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\Task_Scheduler.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6140002: Last Updated: Sat Nov 14 22:14:33 2020
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6140002: Last Updated: Sat Nov 14 22:25:41 2020
 <BR><P>
 <H3>Maximum Stack Usage =         72 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -284,8 +284,8 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[76]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_sys_exit
 </UL>
 
-<P><STRONG><a name="[8a]"></a>rand</STRONG> (Thumb, 48 bytes, Stack size 0 bytes, rand.o(.emb_text))
-<BR><BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QueTask
+<P><STRONG><a name="[8b]"></a>rand</STRONG> (Thumb, 48 bytes, Stack size 0 bytes, rand.o(.emb_text))
+<BR><BR>[Called By]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QueTask
 </UL>
 
 <P><STRONG><a name="[0]"></a>Reset_Handler</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, startup_stm32f407xx.o(.text))
@@ -592,10 +592,10 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__user_setup_stackheap
 </UL>
 
-<P><STRONG><a name="[89]"></a>time</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, sys_time.o(.text))
+<P><STRONG><a name="[8a]"></a>time</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, sys_time.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = time
 </UL>
-<BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QueTask
+<BR>[Called By]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QueTask
 </UL>
 
 <P><STRONG><a name="[77]"></a>malloc</STRONG> (Thumb, 94 bytes, Stack size 16 bytes, h1_alloc.o(.text))
@@ -604,8 +604,8 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__Heap_Full
 <LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_heap_descriptor
 </UL>
-<BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QueTask
-<LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init
+<BR>[Called By]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QueTask
+<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init
 </UL>
 
 <P><STRONG><a name="[7a]"></a>free</STRONG> (Thumb, 78 bytes, Stack size 16 bytes, h1_free.o(.text))
@@ -614,14 +614,14 @@ Global Symbols
 <BR>[Calls]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_heap_descriptor
 </UL>
 <BR>[Called By]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__Heap_ProvideMemory
-<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QueTask
+<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QueTask
 </UL>
 
 <P><STRONG><a name="[7b]"></a>srand</STRONG> (Thumb, 42 bytes, Stack size 8 bytes, rand.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = srand
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_rand_init
-<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QueTask
+<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QueTask
 </UL>
 
 <P><STRONG><a name="[6b]"></a>_rand_init</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, rand.o(.text))
@@ -709,8 +709,8 @@ Global Symbols
 <P><STRONG><a name="[7e]"></a>__rt_SIGRTMEM</STRONG> (Thumb, 14 bytes, Stack size 8 bytes, defsig_rtmem_outer.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = __rt_SIGRTMEM &rArr; __rt_SIGRTMEM_inner &rArr; __default_signal_display &rArr; _ttywrch
 </UL>
-<BR>[Calls]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__sig_exit
-<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_SIGRTMEM_inner
+<BR>[Calls]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_SIGRTMEM_inner
+<LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__sig_exit
 </UL>
 <BR>[Called By]<UL><LI><a href="#[69]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_init_alloc
 <LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__Heap_Broken
@@ -750,8 +750,8 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[76]"></a>_sys_exit</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, sys_exit.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__sig_exit
-<LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_exit_exit
+<BR><BR>[Called By]<UL><LI><a href="#[75]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_exit_exit
+<LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__sig_exit
 </UL>
 
 <P><STRONG><a name="[84]"></a>__default_signal_display</STRONG> (Thumb, 50 bytes, Stack size 16 bytes, defsig_general.o(.text))
@@ -768,8 +768,10 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__default_signal_display
 </UL>
 
-<P><STRONG><a name="[93]"></a>Dispatch</STRONG> (Thumb, 64 bytes, Stack size 8 bytes, main.o(.text.Dispatch))
+<P><STRONG><a name="[86]"></a>Dispatch</STRONG> (Thumb, 80 bytes, Stack size 8 bytes, main.o(.text.Dispatch))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = Dispatch
+</UL>
+<BR>[Calls]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendUART
 </UL>
 <BR>[Called By]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -780,11 +782,11 @@ Global Symbols
 <P><STRONG><a name="[5d]"></a>FirstTask</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, main.o(.text.FirstTask))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = FirstTask
 </UL>
-<BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendUART
+<BR>[Calls]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendUART
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text.main)
 </UL>
-<P><STRONG><a name="[87]"></a>Init</STRONG> (Thumb, 48 bytes, Stack size 16 bytes, main.o(.text.Init))
+<P><STRONG><a name="[88]"></a>Init</STRONG> (Thumb, 48 bytes, Stack size 16 bytes, main.o(.text.Init))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = Init &rArr; malloc &rArr; __Heap_Full &rArr; __Heap_ProvideMemory &rArr; free
 </UL>
 <BR>[Calls]<UL><LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
@@ -792,15 +794,15 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[88]"></a>QueTask</STRONG> (Thumb, 74 bytes, Stack size 24 bytes, main.o(.text.QueTask))
+<P><STRONG><a name="[89]"></a>QueTask</STRONG> (Thumb, 74 bytes, Stack size 24 bytes, main.o(.text.QueTask))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = QueTask &rArr; malloc &rArr; __Heap_Full &rArr; __Heap_ProvideMemory &rArr; free
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;srand
-<LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rand
+<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rand
 <LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;free
 <LI><a href="#[77]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;malloc
-<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;time
-<LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;insertRQueue
+<LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;time
+<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;insertRQueue
 </UL>
 <BR>[Called By]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -808,7 +810,7 @@ Global Symbols
 <P><STRONG><a name="[9]"></a>SysTick_Handler</STRONG> (Thumb, 2 bytes, Stack size 0 bytes, main.o(.text.SysTick_Handler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
-<P><STRONG><a name="[8f]"></a>SystemCoreClockUpdate</STRONG> (Thumb, 126 bytes, Stack size 0 bytes, system_stm32f4xx.o(.text.SystemCoreClockUpdate))
+<P><STRONG><a name="[90]"></a>SystemCoreClockUpdate</STRONG> (Thumb, 126 bytes, Stack size 0 bytes, system_stm32f4xx.o(.text.SystemCoreClockUpdate))
 <BR><BR>[Called By]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
@@ -820,49 +822,49 @@ Global Symbols
 <P><STRONG><a name="[5e]"></a>TaskA</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, main.o(.text.TaskA))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = TaskA
 </UL>
-<BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendUART
+<BR>[Calls]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendUART
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text.main)
 </UL>
 <P><STRONG><a name="[5f]"></a>TaskB</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, main.o(.text.TaskB))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = TaskB
 </UL>
-<BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendUART
+<BR>[Calls]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendUART
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text.main)
 </UL>
 <P><STRONG><a name="[60]"></a>TaskC</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, main.o(.text.TaskC))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = TaskC
 </UL>
-<BR>[Calls]<UL><LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendUART
+<BR>[Calls]<UL><LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendUART
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text.main)
 </UL>
 <P><STRONG><a name="[30]"></a>USART2_IRQHandler</STRONG> (Thumb, 26 bytes, Stack size 8 bytes, main.o(.text.USART2_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = USART2_IRQHandler
 </UL>
-<BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receiveUART
+<BR>[Calls]<UL><LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receiveUART
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
-<P><STRONG><a name="[8b]"></a>insertRQueue</STRONG> (Thumb, 102 bytes, Stack size 16 bytes, main.o(.text.insertRQueue))
+<P><STRONG><a name="[8c]"></a>insertRQueue</STRONG> (Thumb, 102 bytes, Stack size 16 bytes, main.o(.text.insertRQueue))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = insertRQueue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QueTask
+<BR>[Called By]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QueTask
 </UL>
 
-<P><STRONG><a name="[71]"></a>main</STRONG> (Thumb, 162 bytes, Stack size 0 bytes, main.o(.text.main))
+<P><STRONG><a name="[71]"></a>main</STRONG> (Thumb, 138 bytes, Stack size 0 bytes, main.o(.text.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = main &rArr; QueTask &rArr; malloc &rArr; __Heap_Full &rArr; __Heap_ProvideMemory &rArr; free
 </UL>
 <BR>[Calls]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemInit
-<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemCoreClockUpdate
-<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QueTask
-<LI><a href="#[87]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init
-<LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Dispatch
-<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uartInit
-<LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpioInit
-<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_EnableIRQ
-<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Config
+<LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemCoreClockUpdate
+<LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QueTask
+<LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init
+<LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Dispatch
+<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uartInit
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpioInit
+<LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_EnableIRQ
+<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Config
 </UL>
 <BR>[Called By]<UL><LI><a href="#[70]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
@@ -878,38 +880,39 @@ Global Symbols
 <H3>
 Local Symbols
 </H3>
-<P><STRONG><a name="[8c]"></a>SysTick_Config</STRONG> (Thumb, 36 bytes, Stack size 16 bytes, main.o(.text.SysTick_Config))
+<P><STRONG><a name="[8d]"></a>SysTick_Config</STRONG> (Thumb, 36 bytes, Stack size 16 bytes, main.o(.text.SysTick_Config))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = SysTick_Config
 </UL>
-<BR>[Calls]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_SetPriority
+<BR>[Calls]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_SetPriority
 </UL>
 <BR>[Called By]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[92]"></a>__NVIC_EnableIRQ</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, main.o(.text.__NVIC_EnableIRQ))
+<P><STRONG><a name="[93]"></a>__NVIC_EnableIRQ</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, main.o(.text.__NVIC_EnableIRQ))
 <BR><BR>[Called By]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[8d]"></a>__NVIC_SetPriority</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, main.o(.text.__NVIC_SetPriority))
-<BR><BR>[Called By]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Config
+<P><STRONG><a name="[8e]"></a>__NVIC_SetPriority</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, main.o(.text.__NVIC_SetPriority))
+<BR><BR>[Called By]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Config
 </UL>
 
-<P><STRONG><a name="[90]"></a>gpioInit</STRONG> (Thumb, 64 bytes, Stack size 0 bytes, main.o(.text.gpioInit))
+<P><STRONG><a name="[91]"></a>gpioInit</STRONG> (Thumb, 64 bytes, Stack size 0 bytes, main.o(.text.gpioInit))
 <BR><BR>[Called By]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[8e]"></a>receiveUART</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, main.o(.text.receiveUART))
+<P><STRONG><a name="[8f]"></a>receiveUART</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, main.o(.text.receiveUART))
 <BR><BR>[Called By]<UL><LI><a href="#[30]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
 </UL>
 
-<P><STRONG><a name="[86]"></a>sendUART</STRONG> (Thumb, 46 bytes, Stack size 0 bytes, main.o(.text.sendUART))
+<P><STRONG><a name="[87]"></a>sendUART</STRONG> (Thumb, 46 bytes, Stack size 0 bytes, main.o(.text.sendUART))
 <BR><BR>[Called By]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskC
 <LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskB
 <LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskA
 <LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FirstTask
+<LI><a href="#[86]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Dispatch
 </UL>
 
-<P><STRONG><a name="[91]"></a>uartInit</STRONG> (Thumb, 82 bytes, Stack size 0 bytes, main.o(.text.uartInit))
+<P><STRONG><a name="[92]"></a>uartInit</STRONG> (Thumb, 82 bytes, Stack size 0 bytes, main.o(.text.uartInit))
 <BR><BR>[Called By]<UL><LI><a href="#[71]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 <P>

@@ -241,6 +241,9 @@ void Dispatch() {
 		void (*runTask)(void) = readyQueue->task[0]->fncName;
 		(*runTask)();
 		
+		static uint8_t msgX[] = "\n";
+		sendUART( (uint8_t*) msgX, sizeof(msgX) );
+		
 		//start shifting everything to the left
 		for (int j = 0; j < readyQueue->currSize; j++)
 				readyQueue->task[j] = readyQueue->task[j + 1];
@@ -271,24 +274,20 @@ int main()
 	NVIC_EnableIRQ(EXTI0_IRQn);
 
 	
+	//initialize all
 	Init();
 
 	//queueing start schedule string
 	QueTask(FirstTask);
 	Dispatch();
 	
-	QueTask(TaskA);
-	QueTask(TaskB);
-	QueTask(TaskC);
-	
+	//queueing the tasks
 	QueTask(TaskA);
 	QueTask(TaskB);
 	QueTask(TaskC);
 	
 	while(1)
 	{
-		//delay
-		for(uint32_t j=0; j<32767; ++j) {}
 		Dispatch();
 	}
 }
