@@ -186,8 +186,8 @@ void TaskC() {
 
 void QueTask(void (*task)(void)) {
 	
-	srand(time(0));
-	int priority = rand() % 7;
+	//to support 8 modes of priority
+	int priority = rand() % 8;
 	
 	struct Task newTask;
 	
@@ -241,7 +241,7 @@ void Dispatch() {
 		static uint8_t msgX[] = "\n";
 		sendUART( (uint8_t*) msgX, sizeof(msgX) );
 		
-		//start shifti.ng everything to the left
+		//start shifting everything to the left
 		for (int j = 0; j < readyQueue.currSize; j++)
 				readyQueue.task[j] = readyQueue.task[j + 1];
 	
