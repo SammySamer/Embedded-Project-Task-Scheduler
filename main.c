@@ -160,9 +160,6 @@ void TaskA() {
 	
 	sendUART(msgA, sizeof(msgA));
 	
-	// delay
-	for(uint32_t j=0; j<25000000; ++j);
-	
 	sendUART(msgA_done, sizeof(msgA_done));
 	//ReRunMe(0);
 }
@@ -171,8 +168,6 @@ void TaskB() {
 	
 	sendUART(msgB, sizeof(msgB));
 	
-	// delay
-	for(uint32_t j=0; j<25000000; ++j) {}
 	
 	sendUART(msgB_done, sizeof(msgB_done));
 }
@@ -180,9 +175,6 @@ void TaskB() {
 void TaskC() {
 	
 	sendUART(msgC, sizeof(msgC));
-	
-	// delay
-	for(uint32_t j=0; j<25000000; ++j);
 	
 	sendUART(msgC_done, sizeof(msgC_done));
 }
@@ -230,6 +222,8 @@ void QueTask(void (*task)(void)) {
 	
 	insertRQueue(newTask);
 	
+	free(newTask);
+	
 }
 
 void Dispatch() {
@@ -272,14 +266,14 @@ int main()
 	Init();
 
 	QueTask(TaskA);
-	QueTask(TaskB);
-	QueTask(TaskC);
-	QueTask(TaskB);
+	//QueTask(TaskB);
+	//QueTask(TaskC);
+	//QueTask(TaskB);
 	
 	while(1)
 	{
 		// delay
-		for(uint32_t j=0; j<25000000; ++j) {}
+		for(uint32_t j=0; j<2500; ++j) {}
 		Dispatch();
 	}
 }
