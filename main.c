@@ -8,13 +8,9 @@
 
 #define MAX_SIZE 49
 
-
-static uint8_t pressedMsg[] = "Button is pressed !!\n";
-static uint8_t releasedMsg[] = "Button is released !!\n";
-
-static uint8_t msgA[] = "Task A has been initialized.\n";
-static uint8_t msgB[] = "Task B has been initialized.\n";
-static uint8_t msgC[] = "Task C has been initialized.\n";
+static uint8_t msgA[] = "Task A has started running.\n";
+static uint8_t msgB[] = "Task B has started running.\n";
+static uint8_t msgC[] = "Task C has started running.\n";
 
 static uint8_t msgA_done[] = "Task A has finished running\n";
 static uint8_t msgB_done[] = "Task B has finished running\n";
@@ -33,10 +29,6 @@ struct Queue {
 	struct Task* task[50];
 };
 
-static 
-
-
-static char buttonPressed = 1;
 static char timerFlag = 0;
 static volatile uint8_t stopFlag = 0;
 
@@ -59,7 +51,7 @@ void Dispatch(void);
 void ReRunMe(int delay);
 
 //queue functions
-void insert(struct Queue*, struct Task*);
+void insertRQueue(struct Task*);
 
 static struct Queue* readyQueue;
 static struct Queue* delayQueue;
@@ -93,17 +85,6 @@ void USART2_IRQHandler(void) {
 void EXTI0_IRQHandler(void) {
 		/* Clear interrupt request */
 		EXTI->PR |= 0x01;
-		/* send msg indicating button state */
-		if(buttonPressed)
-		{
-				sendUART(pressedMsg, sizeof(pressedMsg));
-				buttonPressed = 0;
-		}
-		else
-		{
-				sendUART(releasedMsg, sizeof(releasedMsg));
-				buttonPressed = 1;
-		}
 }
 
 static void sendUART(uint8_t * data, uint32_t length)
@@ -178,6 +159,10 @@ static void uartInit()
 void TaskA() {
 	
 	sendUART(msgA, sizeof(msgA));
+	
+	// delay
+	for(uint32_t j=0; j<25000000; ++j);
+	
 	sendUART(msgA_done, sizeof(msgA_done));
 	//ReRunMe(0);
 }
@@ -185,42 +170,50 @@ void TaskA() {
 void TaskB() {
 	
 	sendUART(msgB, sizeof(msgB));
+	
+	// delay
+	for(uint32_t j=0; j<25000000; ++j) {}
+	
 	sendUART(msgB_done, sizeof(msgB_done));
 }
 
 void TaskC() {
 	
 	sendUART(msgC, sizeof(msgC));
+	
+	// delay
+	for(uint32_t j=0; j<25000000; ++j);
+	
 	sendUART(msgC_done, sizeof(msgC_done));
 }
 
 
-void insert(struct Queue* Q, struct Task* T) {
+void insertRQueue(struct Task* T) {
 	
 	//if the queue is full, do nothing
-	if (Q->currSize == Q->maxSize)
+	if (readyQueue->currSize == readyQueue->maxSize)
 		return;
 	
-  for (int i = 0; i <= Q->currSize; i++) {
+  for (int i = 0; i <= readyQueue->currSize; i++) {
 
 		//if the current tasks's priority is more than what we're currently
 		//pointing to, we want to place it in that position
-		if (T->prior >= Q->task[i]->prior) {
+		if (T->prior >= readyQueue->task[i]->prior) {
 			
 			//start shifting everything to the right to make space
-				for (int j = Q->currSize + 1; j > i; j--)
-						Q->task[j] = Q->task[j - 1];
+			for (int j = readyQueue->currSize + 1; j > i; j--)
+					readyQueue->task[j] = readyQueue->task[j - 1];
 
-				Q->task[i] = T;
-				Q->currSize = Q->currSize + 1;
-			
-				return;
+			readyQueue->task[i] = T;
+			readyQueue->currSize = readyQueue->currSize + 1;
+		
+			return;
 		}
 	}
 
 	//if the priority is smaller than everything else, place it at the end.
-	Q->currSize = Q->currSize + 1;
-	Q->task[Q->currSize] = T;
+	readyQueue->currSize = readyQueue->currSize + 1;
+	readyQueue->task[readyQueue->currSize] = T;
 
 }
 
@@ -235,16 +228,21 @@ void QueTask(void (*task)(void)) {
 	newTask->prior = priority;
 	newTask->fncName = task;
 	
-	insert(readyQueue, newTask);
+	insertRQueue(newTask);
 	
 }
 
 void Dispatch() {
 	
-	//if it's not empty
+	//if the queue is not empty
 	if (readyQueue->currSize != 0) {
 		void (*runTask)(void) = readyQueue->task[0]->fncName;
 		(*runTask)();
+		
+		//start shifting everything to the left
+		for (int j = 0; j < readyQueue->currSize; j++)
+				readyQueue->task[j] = readyQueue->task[j + 1];
+	
 		readyQueue->currSize = readyQueue->currSize - 1;
 	}
 }
@@ -281,10 +279,8 @@ int main()
 	
 	while(1)
 	{
-			if(timerFlag && !stopFlag)
-			{
-				Dispatch();
-				timerFlag = 0;
-			}
+		// delay
+		for(uint32_t j=0; j<25000000; ++j) {}
+		Dispatch();
 	}
 }
