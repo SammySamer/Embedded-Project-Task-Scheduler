@@ -3,11 +3,11 @@
 <title>Static Call Graph - [.\Objects\Task_Scheduler.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\Task_Scheduler.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6140002: Last Updated: Sun Nov 15 13:56:28 2020
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 6140002: Last Updated: Sun Nov 15 15:55:46 2020
 <BR><P>
-<H3>Maximum Stack Usage =         72 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
+<H3>Maximum Stack Usage =         80 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
-TaskA &rArr; ReRunMe &rArr; insertRQueue
+TaskC &rArr; ReRunMe &rArr; insertRQueue
 <P>
 <H3>
 Functions with no stack information
@@ -72,7 +72,7 @@ Function Pointers
  <LI><a href="#[e]">FLASH_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
  <LI><a href="#[3a]">FMC_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
  <LI><a href="#[5a]">FPU_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
- <LI><a href="#[5d]">FirstTask</a> from main.o(.text.FirstTask) referenced 2 times from main.o(.text.main)
+ <LI><a href="#[5e]">FirstTask</a> from main.o(.text.FirstTask) referenced 2 times from main.o(.text.main)
  <LI><a href="#[59]">HASH_RNG_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
  <LI><a href="#[2]">HardFault_Handler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
  <LI><a href="#[2a]">I2C1_ER_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
@@ -117,9 +117,10 @@ Function Pointers
  <LI><a href="#[38]">TIM8_CC_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
  <LI><a href="#[37]">TIM8_TRG_COM_TIM14_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
  <LI><a href="#[36]">TIM8_UP_TIM13_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
- <LI><a href="#[5e]">TaskA</a> from main.o(.text.TaskA) referenced 2 times from main.o(.text.main)
- <LI><a href="#[5f]">TaskB</a> from main.o(.text.TaskB) referenced 2 times from main.o(.text.main)
- <LI><a href="#[60]">TaskC</a> from main.o(.text.TaskC) referenced 2 times from main.o(.text.main)
+ <LI><a href="#[5f]">TaskA</a> from main.o(.text.TaskA) referenced 2 times from main.o(.text.main)
+ <LI><a href="#[60]">TaskB</a> from main.o(.text.TaskB) referenced 2 times from main.o(.text.main)
+ <LI><a href="#[5d]">TaskC</a> from main.o(.text.TaskC) referenced 2 times from main.o(.text.QueTask)
+ <LI><a href="#[5d]">TaskC</a> from main.o(.text.TaskC) referenced 2 times from main.o(.text.main)
  <LI><a href="#[3e]">UART4_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
  <LI><a href="#[3f]">UART5_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
  <LI><a href="#[2f]">USART1_IRQHandler</a> from startup_stm32f407xx.o(.text) referenced from startup_stm32f407xx.o(RESET)
@@ -277,8 +278,10 @@ Global Symbols
 <BR><BR>[Calls]<UL><LI><a href="#[74]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_sys_exit
 </UL>
 
-<P><STRONG><a name="[7b]"></a>rand</STRONG> (Thumb, 48 bytes, Stack size 0 bytes, rand.o(.emb_text))
-<BR><BR>[Called By]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QueTask
+<P><STRONG><a name="[7a]"></a>rand</STRONG> (Thumb, 48 bytes, Stack size 0 bytes, rand.o(.emb_text))
+<BR><BR>[Called By]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskB
+<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskA
+<LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QueTask
 </UL>
 
 <P><STRONG><a name="[0]"></a>Reset_Handler</STRONG> (Thumb, 8 bytes, Stack size 0 bytes, startup_stm32f407xx.o(.text))
@@ -642,10 +645,8 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[73]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_exit_exit
 </UL>
 
-<P><STRONG><a name="[78]"></a>Dispatch</STRONG> (Thumb, 94 bytes, Stack size 24 bytes, main.o(.text.Dispatch))
+<P><STRONG><a name="[85]"></a>Dispatch</STRONG> (Thumb, 82 bytes, Stack size 24 bytes, main.o(.text.Dispatch))
 <BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = Dispatch
-</UL>
-<BR>[Calls]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendUART
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -653,44 +654,44 @@ Global Symbols
 <P><STRONG><a name="[10]"></a>EXTI0_IRQHandler</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, main.o(.text.EXTI0_IRQHandler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
-<P><STRONG><a name="[5d]"></a>FirstTask</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, main.o(.text.FirstTask))
+<P><STRONG><a name="[5e]"></a>FirstTask</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, main.o(.text.FirstTask))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = FirstTask
 </UL>
-<BR>[Calls]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendUART
+<BR>[Calls]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendUART
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text.main)
 </UL>
-<P><STRONG><a name="[85]"></a>Init</STRONG> (Thumb, 30 bytes, Stack size 0 bytes, main.o(.text.Init))
+<P><STRONG><a name="[84]"></a>Init</STRONG> (Thumb, 40 bytes, Stack size 0 bytes, main.o(.text.Init))
 <BR><BR>[Called By]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[7a]"></a>QueTask</STRONG> (Thumb, 30 bytes, Stack size 8 bytes, main.o(.text.QueTask))
+<P><STRONG><a name="[79]"></a>QueTask</STRONG> (Thumb, 46 bytes, Stack size 8 bytes, main.o(.text.QueTask))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = QueTask &rArr; insertRQueue
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rand
-<LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;insertRQueue
+<BR>[Calls]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rand
+<LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;insertRQueue
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[7d]"></a>ReRunMe</STRONG> (Thumb, 170 bytes, Stack size 32 bytes, main.o(.text.ReRunMe))
+<P><STRONG><a name="[7c]"></a>ReRunMe</STRONG> (Thumb, 174 bytes, Stack size 32 bytes, main.o(.text.ReRunMe))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = ReRunMe &rArr; insertRQueue
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;insertRQueue
+<BR>[Calls]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;insertRQueue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskC
-<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskB
-<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskA
+<BR>[Called By]<UL><LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskC
+<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskB
+<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskA
 </UL>
 
 <P><STRONG><a name="[9]"></a>SysTick_Handler</STRONG> (Thumb, 84 bytes, Stack size 16 bytes, main.o(.text.SysTick_Handler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = SysTick_Handler &rArr; insertRQueue
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;insertRQueue
+<BR>[Calls]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;insertRQueue
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
-<P><STRONG><a name="[81]"></a>SystemCoreClockUpdate</STRONG> (Thumb, 126 bytes, Stack size 0 bytes, system_stm32f4xx.o(.text.SystemCoreClockUpdate))
+<P><STRONG><a name="[80]"></a>SystemCoreClockUpdate</STRONG> (Thumb, 126 bytes, Stack size 0 bytes, system_stm32f4xx.o(.text.SystemCoreClockUpdate))
 <BR><BR>[Called By]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
@@ -699,59 +700,60 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(.text)
 </UL>
-<P><STRONG><a name="[5e]"></a>TaskA</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, main.o(.text.TaskA))
+<P><STRONG><a name="[5f]"></a>TaskA</STRONG> (Thumb, 54 bytes, Stack size 8 bytes, main.o(.text.TaskA))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = TaskA &rArr; ReRunMe &rArr; insertRQueue
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReRunMe
-<LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendUART
+<BR>[Calls]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rand
+<LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReRunMe
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text.main)
 </UL>
-<P><STRONG><a name="[5f]"></a>TaskB</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, main.o(.text.TaskB))
+<P><STRONG><a name="[60]"></a>TaskB</STRONG> (Thumb, 54 bytes, Stack size 8 bytes, main.o(.text.TaskB))
 <BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = TaskB &rArr; ReRunMe &rArr; insertRQueue
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReRunMe
-<LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendUART
+<BR>[Calls]<UL><LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;rand
+<LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReRunMe
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(.text.main)
 </UL>
-<P><STRONG><a name="[60]"></a>TaskC</STRONG> (Thumb, 24 bytes, Stack size 8 bytes, main.o(.text.TaskC))
-<BR><BR>[Stack]<UL><LI>Max Depth = 72<LI>Call Chain = TaskC &rArr; ReRunMe &rArr; insertRQueue
+<P><STRONG><a name="[5d]"></a>TaskC</STRONG> (Thumb, 110 bytes, Stack size 16 bytes, main.o(.text.TaskC))
+<BR><BR>[Stack]<UL><LI>Max Depth = 80<LI>Call Chain = TaskC &rArr; ReRunMe &rArr; insertRQueue
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReRunMe
-<LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendUART
+<BR>[Calls]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReRunMe
+<LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendUART
 </UL>
-<BR>[Address Reference Count : 1]<UL><LI> main.o(.text.main)
+<BR>[Address Reference Count : 2]<UL><LI> main.o(.text.QueTask)
+<LI> main.o(.text.main)
 </UL>
 <P><STRONG><a name="[30]"></a>USART2_IRQHandler</STRONG> (Thumb, 26 bytes, Stack size 8 bytes, main.o(.text.USART2_IRQHandler))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = USART2_IRQHandler
 </UL>
-<BR>[Calls]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receiveUART
+<BR>[Calls]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;receiveUART
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f407xx.o(RESET)
 </UL>
-<P><STRONG><a name="[7c]"></a>insertRQueue</STRONG> (Thumb, 148 bytes, Stack size 32 bytes, main.o(.text.insertRQueue))
+<P><STRONG><a name="[7b]"></a>insertRQueue</STRONG> (Thumb, 148 bytes, Stack size 32 bytes, main.o(.text.insertRQueue))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = insertRQueue
 </UL>
-<BR>[Calls]<UL><LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendUART
+<BR>[Calls]<UL><LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sendUART
 </UL>
 <BR>[Called By]<UL><LI><a href="#[9]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Handler
-<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReRunMe
-<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QueTask
+<LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReRunMe
+<LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QueTask
 </UL>
 
 <P><STRONG><a name="[6f]"></a>main</STRONG> (Thumb, 150 bytes, Stack size 0 bytes, main.o(.text.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = main &rArr; QueTask &rArr; insertRQueue
 </UL>
 <BR>[Calls]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemInit
-<LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemCoreClockUpdate
-<LI><a href="#[7a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QueTask
-<LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init
-<LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Dispatch
-<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uartInit
-<LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpioInit
-<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_EnableIRQ
-<LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Config
+<LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemCoreClockUpdate
+<LI><a href="#[79]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;QueTask
+<LI><a href="#[84]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Init
+<LI><a href="#[85]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Dispatch
+<LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;uartInit
+<LI><a href="#[81]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;gpioInit
+<LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_EnableIRQ
+<LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Config
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
@@ -767,40 +769,37 @@ Global Symbols
 <H3>
 Local Symbols
 </H3>
-<P><STRONG><a name="[7e]"></a>SysTick_Config</STRONG> (Thumb, 36 bytes, Stack size 16 bytes, main.o(.text.SysTick_Config))
+<P><STRONG><a name="[7d]"></a>SysTick_Config</STRONG> (Thumb, 36 bytes, Stack size 16 bytes, main.o(.text.SysTick_Config))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = SysTick_Config
 </UL>
-<BR>[Calls]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_SetPriority
+<BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_SetPriority
 </UL>
 <BR>[Called By]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[84]"></a>__NVIC_EnableIRQ</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, main.o(.text.__NVIC_EnableIRQ))
+<P><STRONG><a name="[83]"></a>__NVIC_EnableIRQ</STRONG> (Thumb, 32 bytes, Stack size 0 bytes, main.o(.text.__NVIC_EnableIRQ))
 <BR><BR>[Called By]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[7f]"></a>__NVIC_SetPriority</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, main.o(.text.__NVIC_SetPriority))
-<BR><BR>[Called By]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Config
+<P><STRONG><a name="[7e]"></a>__NVIC_SetPriority</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, main.o(.text.__NVIC_SetPriority))
+<BR><BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SysTick_Config
 </UL>
 
-<P><STRONG><a name="[82]"></a>gpioInit</STRONG> (Thumb, 64 bytes, Stack size 0 bytes, main.o(.text.gpioInit))
+<P><STRONG><a name="[81]"></a>gpioInit</STRONG> (Thumb, 64 bytes, Stack size 0 bytes, main.o(.text.gpioInit))
 <BR><BR>[Called By]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[80]"></a>receiveUART</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, main.o(.text.receiveUART))
+<P><STRONG><a name="[7f]"></a>receiveUART</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, main.o(.text.receiveUART))
 <BR><BR>[Called By]<UL><LI><a href="#[30]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;USART2_IRQHandler
 </UL>
 
-<P><STRONG><a name="[79]"></a>sendUART</STRONG> (Thumb, 46 bytes, Stack size 0 bytes, main.o(.text.sendUART))
-<BR><BR>[Called By]<UL><LI><a href="#[7c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;insertRQueue
-<LI><a href="#[60]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskC
-<LI><a href="#[5f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskB
-<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskA
-<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FirstTask
-<LI><a href="#[78]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;Dispatch
+<P><STRONG><a name="[78]"></a>sendUART</STRONG> (Thumb, 46 bytes, Stack size 0 bytes, main.o(.text.sendUART))
+<BR><BR>[Called By]<UL><LI><a href="#[7b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;insertRQueue
+<LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TaskC
+<LI><a href="#[5e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;FirstTask
 </UL>
 
-<P><STRONG><a name="[83]"></a>uartInit</STRONG> (Thumb, 82 bytes, Stack size 0 bytes, main.o(.text.uartInit))
+<P><STRONG><a name="[82]"></a>uartInit</STRONG> (Thumb, 82 bytes, Stack size 0 bytes, main.o(.text.uartInit))
 <BR><BR>[Called By]<UL><LI><a href="#[6f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 <P>

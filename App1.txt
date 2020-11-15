@@ -51,10 +51,14 @@ static struct Queue readyQueue;
 static struct Queue delayQueue;
 static struct Task currTask;
 
-static int count;
-
 static uint8_t msg1[] = "Scheduler is now running!\n\n";
-static uint8_t msgC[] = "Current count: ";
+static uint8_t msgA[] = "Task A has started running.\n";
+static uint8_t msgB[] = "Task B has started running.\n";
+static uint8_t msgC[] = "Task C has started running.\n";
+
+static uint8_t msgA_done[] = "Task A has finished running.\n";
+static uint8_t msgB_done[] = "Task B has finished running.\n";
+static uint8_t msgC_done[] = "Task C has finished running.\n";
 
 void Init(){
 	
@@ -64,8 +68,6 @@ void Init(){
 	
 	delayQueue.currSize = 0;
 	delayQueue.maxSize = MAX_SIZE;
-	
-	count = 0;
 	
 }
 
@@ -178,38 +180,23 @@ void FirstTask() {
 
 void TaskA() {
 	
-	count += rand() % 3 + 1;
-	ReRunMe(1);
+	sendUART(msgA, sizeof(msgA));
+	sendUART(msgA_done, sizeof(msgA_done));
+	ReRunMe(20);
 }
 
 void TaskB() {
 	
-	count -= rand() % 3 + 1;
-	ReRunMe(1);
+	sendUART(msgB, sizeof(msgB));
+	sendUART(msgB_done, sizeof(msgB_done));
+	ReRunMe(30);
 }
 
 void TaskC() {
 	
 	sendUART(msgC, sizeof(msgC));
-	char sign;
-	char add;
-	
-	if (count < 0) {
-		sign = '-';
-		int tempCount = count * -1;
-		tempCount = tempCount % 10;
-	  add = tempCount + '0';
-	}
-	
-	else {
-		sign = '+';
-	  count = count % 10;
-		add = count + '0';
-	}
-	
-  char temp[3] = {sign, add, '\n'};
-	sendUART((uint8_t*)temp, sizeof(temp));
-	ReRunMe(60);
+	sendUART(msgC_done, sizeof(msgC_done));
+	ReRunMe(50);
 }
 
 
@@ -217,10 +204,6 @@ void QueTask(void (*task)(void)) {
 	
 	//to support 8 modes of priority
 	int priority = rand() % 8;
-	
-	//giving taskC highest priority to be able to run when ReRunMe(0) for A and B are called
-	if (task == *TaskC)
-		priority = 7;
 	
 	struct Task newTask;
 	
@@ -319,6 +302,9 @@ void Dispatch() {
 		currTask = readyQueue.task[0];
 		(*runTask)();
 		
+		static uint8_t msgX[] = "\n";
+		sendUART( (uint8_t*) msgX, sizeof(msgX) );
+		
 		//start shifting everything to the left
 		for (int j = 0; j < readyQueue.currSize; j++)
 				readyQueue.task[j] = readyQueue.task[j + 1];
@@ -363,6 +349,14 @@ int main()
 	Dispatch();
 	
 	//queueing the tasks
+	QueTask(TaskA);
+	QueTask(TaskB);
+	QueTask(TaskC);
+	
+	QueTask(TaskA);
+	QueTask(TaskB);
+	QueTask(TaskC);
+	
 	QueTask(TaskA);
 	QueTask(TaskB);
 	QueTask(TaskC);
