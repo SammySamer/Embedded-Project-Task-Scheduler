@@ -183,7 +183,7 @@ void TaskA() {
 	//sendUART(msgA, sizeof(msgA));
 	
 	sendUART(msgA_done, sizeof(msgA_done));
-	ReRunMe(10);
+	ReRunMe(30);
 }
 
 void TaskB() {
@@ -321,10 +321,9 @@ int main()
 	uartInit();
 	
 	/* enable SysTick timer to interrupt system every 100ms */
-	SysTick->LOAD = 6000000 - 1;
-	SysTick->CTRL = 7;
-	//SysTick_Config(SystemCoreClock/4);
-	__enable_irq();
+	//it's not exactly 100ms, but the professor mentioned that it makes
+	//sense since this is a simulation and not real hardware
+	SysTick_Config(SystemCoreClock/3);
 	
 	
 	/* enable interrupt controller for USART2 external interrupt */
