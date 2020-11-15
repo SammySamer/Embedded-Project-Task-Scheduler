@@ -8,15 +8,6 @@
 
 #define MAX_SIZE 49
 
-static uint8_t msg1[] = "Scheduler is now running!\n\n";
-static uint8_t msgA[] = "Task A has started running.\n";
-static uint8_t msgB[] = "Task B has started running.\n";
-static uint8_t msgC[] = "Task C has started running.\n";
-
-static uint8_t msgA_done[] = "Task A has finished running.\n";
-static uint8_t msgB_done[] = "Task B has finished running.\n";
-static uint8_t msgC_done[] = "Task C has finished running.\n";
-
 static volatile uint32_t msTicks100 = 0;
 
 struct Task {
@@ -60,6 +51,15 @@ static struct Queue readyQueue;
 static struct Queue delayQueue;
 static struct Task currTask;
 
+static uint8_t msg1[] = "Scheduler is now running!\n\n";
+static uint8_t msgA[] = "Task A has started running.\n";
+static uint8_t msgB[] = "Task B has started running.\n";
+static uint8_t msgC[] = "Task C has started running.\n";
+
+static uint8_t msgA_done[] = "Task A has finished running.\n";
+static uint8_t msgB_done[] = "Task B has finished running.\n";
+static uint8_t msgC_done[] = "Task C has finished running.\n";
+
 void Init(){
 	
 	//init the 2 queues
@@ -79,7 +79,7 @@ void SysTick_Handler(void)  {
 	if (delayQueue.currSize != 0) {
 		
 		//start checking the delayQueue
-		for (int j = delayQueue.currSize - 1; j >= 0; j--) {
+		for (int j = delayQueue.currSize; j >= 0; j--) {
 			delayQueue.task[j].delay--;
 			
 			//if the delay is now 0, it is now ready for the readyQueue and to
@@ -183,23 +183,23 @@ void TaskA() {
 	//sendUART(msgA, sizeof(msgA));
 	
 	sendUART(msgA_done, sizeof(msgA_done));
-	ReRunMe(30);
+	ReRunMe(20);
 }
 
 void TaskB() {
 	
-	sendUART(msgB, sizeof(msgB));
+	//sendUART(msgB, sizeof(msgB));
 
 	sendUART(msgB_done, sizeof(msgB_done));
-	//ReRunMe(20);
+	ReRunMe(30);
 }
 
 void TaskC() {
 	
-	sendUART(msgC, sizeof(msgC));
+	//sendUART(msgC, sizeof(msgC));
 	
 	sendUART(msgC_done, sizeof(msgC_done));
-	//ReRunMe(25);
+	ReRunMe(50);
 }
 
 
@@ -220,15 +220,18 @@ void QueTask(void (*task)(void)) {
 
 void insertRQueue(struct Task T) {
 	
-	//if the queue is full, do nothing
-	if (readyQueue.currSize == readyQueue.maxSize)
+	//if the queue is full, just return
+	if (readyQueue.currSize == readyQueue.maxSize) {
+		static uint8_t msgQFull[] = "Queue is currently full, please wait for tasks to finish!\n";
+		sendUART( (uint8_t*) msgQFull, sizeof(msgQFull) );
 		return;
+	}
 	
-  for (int i = 0; i <= readyQueue.currSize; i++) {
+  for (int i = 0; i < readyQueue.currSize; i++) {
 
 		//if the current tasks's priority is more than what we're currently
 		//pointing to, we want to place it in that position
-		if (T.prior >= readyQueue.task[i].prior) {
+		if (T.prior > readyQueue.task[i].prior) {
 			
 			//start shifting everything to the right to make space
 			for (int j = readyQueue.currSize + 1; j > i; j--)
@@ -242,8 +245,8 @@ void insertRQueue(struct Task T) {
 	}
 
 	//if the priority is smaller than everything else, place it at the end.
-	readyQueue.currSize = readyQueue.currSize + 1;
 	readyQueue.task[readyQueue.currSize] = T;
+	readyQueue.currSize = readyQueue.currSize + 1;
 
 }
 
@@ -270,7 +273,7 @@ void ReRunMe(int delay) {
 
 			//if the current tasks's priority is more than what we're currently
 			//pointing to, we want to place it in that position
-			if (rerunTask.delay >= delayQueue.task[i].prior) {
+			if (rerunTask.delay > delayQueue.task[i].delay) {
 				
 				//start shifting everything to the right to make space
 				for (int j = delayQueue.currSize + 1; j > i; j--)
@@ -284,8 +287,8 @@ void ReRunMe(int delay) {
 		}
 
 		//if the delay is smaller than everything else, place it at the end.
-		delayQueue.currSize = readyQueue.currSize + 1;
-		delayQueue.task[readyQueue.currSize] = rerunTask;
+		delayQueue.currSize = delayQueue.currSize + 1;
+		delayQueue.task[delayQueue.currSize] = rerunTask;
 	}
 }
 
