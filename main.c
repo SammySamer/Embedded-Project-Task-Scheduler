@@ -185,7 +185,6 @@ void TaskA() {
 	
 	sendUART(msgA, sizeof(msgA));
 	sendUART(msgA_done, sizeof(msgA_done));
-	ReRunMe(0);
 }
 
 void TaskB() {
@@ -212,9 +211,9 @@ void QueTask(void (*task)(void)) {
 	//to support 8 modes of priority
 	int priority;
 	
-	if (task == *TaskA)
+	if (task == *TaskB)
 		priority = 7;
-	else if (task == *TaskD || task == *TaskB)
+	else if (task == *TaskD || task == *TaskA)
 		priority = 4;
 	else //TaskC
 		priority = 0;
@@ -364,6 +363,10 @@ int main()
 	
 	//queueing the tasks
 	QueTask(TaskA);
+	QueTask(TaskB);
+	QueTask(TaskC);
+	QueTask(TaskD);
+	
 	
 	while(1)
 	{

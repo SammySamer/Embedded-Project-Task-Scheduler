@@ -70,7 +70,8 @@
  2) For the QueTask and Dispatch functions (since they're so similar), we have a QuePatch.txt that showcases how they work. 
  In this program, it'll have 4 tasks: A, B, C and D, each one will have a certain priority, B will have the highest (7), 
  A and D will have the 2nd highest (4), and C will be the lowest (0). The order in which they're Queue'd in the code will be... A, B, C, D
- but in actuality, it should be B, A, D, C due to their priorities, which is what happens. 
+ but in actuality, it should be B, A, D, C due to their priorities, which is what happens. Note that D should be after A, because
+ our code logic gives higher priority to the first queue'd task, placing a similar priority task after it, not before.
 
  3) For the delayQueue portion, since the readyQueue and delayQueue have the exact same logic except that delayQueue is organizing
  based on delay descendingly, and readyQueue is organizing based on priority descendingly, we believe it is sufficient to say that since our tests in (2)

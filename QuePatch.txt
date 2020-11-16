@@ -211,9 +211,9 @@ void QueTask(void (*task)(void)) {
 	//to support 8 modes of priority
 	int priority;
 	
-	if (task == *TaskA)
+	if (task == *TaskB)
 		priority = 7;
-	else if (task == *TaskD || task == *TaskB)
+	else if (task == *TaskD || task == *TaskA)
 		priority = 4;
 	else //TaskC
 		priority = 0;
