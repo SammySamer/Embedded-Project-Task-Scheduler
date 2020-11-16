@@ -185,7 +185,6 @@ void TaskA() {
 	
 	sendUART(msgA, sizeof(msgA));
 	sendUART(msgA_done, sizeof(msgA_done));
-	ReRunMe(0);
 }
 
 void TaskB() {
@@ -364,6 +363,10 @@ int main()
 	
 	//queueing the tasks
 	QueTask(TaskA);
+	QueTask(TaskB);
+	QueTask(TaskC);
+	QueTask(TaskD);
+	
 	
 	while(1)
 	{

@@ -34,9 +34,6 @@ static uint8_t receiveUART(void);
 //Tasks
 void FirstTask(void);
 void TaskA(void);
-void TaskB(void);
-void TaskC(void);
-void TaskD(void);
 
 //TaskScheduler functions
 void Init(void);
@@ -54,14 +51,6 @@ static struct Task currTask;
 
 static uint8_t msg1[] = "Scheduler is now running!\n\n";
 static uint8_t msgA[] = "Task A has started running.\n";
-static uint8_t msgB[] = "Task B has started running.\n";
-static uint8_t msgC[] = "Task C has started running.\n";
-static uint8_t msgD[] = "Task D has started running.\n";
-
-static uint8_t msgA_done[] = "Task A has finished running.\n";
-static uint8_t msgB_done[] = "Task B has finished running.\n";
-static uint8_t msgC_done[] = "Task C has finished running.\n";
-static uint8_t msgD_done[] = "Task D has finished running.\n";
 
 void Init(){
 	
@@ -188,36 +177,11 @@ void TaskA() {
 	ReRunMe(0);
 }
 
-void TaskB() {
-	
-	sendUART(msgB, sizeof(msgB));
-	sendUART(msgB_done, sizeof(msgB_done));
-}
-
-void TaskC() {
-	
-	sendUART(msgC, sizeof(msgC));
-	sendUART(msgC_done, sizeof(msgC_done));
-}
-
-void TaskD() {
-	
-	sendUART(msgD, sizeof(msgD));
-	sendUART(msgD_done, sizeof(msgD_done));
-}
-
 
 void QueTask(void (*task)(void)) {
 	
 	//to support 8 modes of priority
-	int priority;
-	
-	if (task == *TaskA)
-		priority = 7;
-	else if (task == *TaskD || task == *TaskB)
-		priority = 4;
-	else //TaskC
-		priority = 0;
+	int priority = rand() % 8;
 	
 	struct Task newTask;
 	

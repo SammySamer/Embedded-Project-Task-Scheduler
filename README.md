@@ -7,6 +7,9 @@
  The first project for CSCE course Embedded Systems, it involves utilizing the Renode system to simulate the F407VE STM32 microcontroller to program a Task Scheduling program.
 
 # Code Run Through
+--Please note that for every txt file included, it'll include a runnable code to copy and paste into main.c to run, and they all include screenshots
+ (same filename as the txt files but in png format) of the output.
+
  0) There are 2 Structs: 
   a) Task: that involves int delay, int priority and void (*fncName)(void) to store the required task details.
   b) Queue: that involves int currSize, int maxSize and an array of struct Task. 
@@ -57,3 +60,19 @@
   b) App2.txt is another simple application with 3 tasks, TaskA adds by a random number from 1-3, TaskB substracts 
   by a random number from 1-3, and these both include ReRunMe(1), TaskC checks whether it's negative or not, 
   if it is, it makes sure it'll output correctly, then mods the current value by 10 and then outputs this new result every 60 ticks.
+
+# The Unit Tests
+ 1) For the ReRunMe functions, we believe the 2 applications we wrote are sufficient as they both include multiple instances of
+ the function, however, the ReRunMe(0) wasn't included, therefore there is a new file called ReRunMe.txt that'll showcase the 
+ 0 is working. It has 1 function TaskA with 2 sendUART that's just being ReRunMe(0) so it's just constantly outputing those 2 strings.
+ Take note of the scroll bar to the right showcasing how many times it's done TaskA.
+
+ 2) For the QueTask and Dispatch functions (since they're so similar), we have a QuePatch.txt that showcases how they work. 
+ In this program, it'll have 4 tasks: A, B, C and D, each one will have a certain priority, B will have the highest (7), 
+ A and D will have the 2nd highest (4), and C will be the lowest (0). The order in which they're Queue'd in the code will be... A, B, C, D
+ but in actuality, it should be B, A, D, C due to their priorities, which is what happens. 
+
+ 3) For the delayQueue portion, since the readyQueue and delayQueue have the exact same logic except that delayQueue is organizing
+ based on delay descendingly, and readyQueue is organizing based on priority descendingly, we believe it is sufficient to say that since our tests in (2)
+ and (1) are working, that it is clear that (3) is also working without providing an extra application as proof.
+
